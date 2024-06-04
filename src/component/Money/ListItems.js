@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from 'src/component/Money/ListItems.module.css';
+import classes from './ListItems.module.css';
 
 const ListItems = () => {
     return (
