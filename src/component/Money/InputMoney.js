@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './InputMoney.module.css';
 import dayjs from "dayjs";
 
@@ -6,23 +6,41 @@ const InputMoney = () => {
     const today = dayjs(new Date()).format('YYYY-MM-DD').toString();
 
     const [productName, setProductName] = React.useState('');
+
     const [productPrice, setProductPrice] = React.useState('');
+    const [priceFocus, setPriceFocus] = React.useState(true);
+    const [formattedPrice, setFormattedPrice] = React.useState('');
+
     const [productType, setProductType] = React.useState(['식료품']);
     const [selectedType, setSelectedType] = React.useState('식료품');
-    const [productDate, setProductDate] = React.useState(today);
-    const [productMemo, setProductMemo] = React.useState('');
-    const [productReBuy, setProductReBuy] = React.useState(true);
     const [addProductFlag, setAddProductFlag] = React.useState(false);
     const [addProduct, setAddProduct] = React.useState('');
 
+    const [productDate, setProductDate] = React.useState(today);
+
+    const [productMemo, setProductMemo] = React.useState(false);
+    const [productMemoDescription, setProductMemoDescription] = React.useState('');
+
+    const [productReBuy, setProductReBuy] = React.useState(true);
+
+
+
     const onChangeProductName = (event) => {
         setProductName(event.target.value);
-        console.log(productName);
+        // console.log(productName);
     }
     const onChangeProductPrice = (event) => {
         let regex = /^[0-9]*$/;
         if (regex.test(event.target.value)) {
             setProductPrice(event.target.value);
+        }
+    }
+    const onFocusProductPrice = () => {
+        priceFocus ? setPriceFocus(false) : setPriceFocus(true);
+        if (productPrice.length >= 4) {
+            setFormattedPrice(Number(productPrice).toLocaleString());
+        } else {
+            setFormattedPrice(productPrice);
         }
     }
     const toggleAddProductType = () => {
@@ -33,7 +51,7 @@ const InputMoney = () => {
     }
     const deleteProductType = () => {
         setProductType(productType.filter(item => item !== selectedType));
-        console.log("삭제 : ",selectedType);
+        // console.log("삭제 : ",selectedType);
     }
     const onChangeAddProduct = (event) => {
         setAddProduct(event.target.value);
@@ -50,6 +68,15 @@ const InputMoney = () => {
 
     const onChangeProductDate = (event) => {
         setProductDate(event.target.value);
+    }
+    const onChangeProductMemo = () => {
+        productMemo ? setProductMemo(false) : setProductMemo(true);
+    }
+    const onChangeProductDescription = (event) => {
+        setProductMemoDescription(event.target.value);
+    }
+    const onChangeProductReBuy = (event) => {
+        setProductReBuy(Boolean(event.target.value));
     }
 
     return (
@@ -71,13 +98,24 @@ const InputMoney = () => {
                     <label htmlFor="productPrice">가격</label>
                 </div>
                 <div className={classes.elementBox}>
-                    <input id="productPrice"
-                           name="productPrice"
-                           type="text"
-                           placeholder="상품 가격 입력"
-                           value={productPrice}
-                           onChange={onChangeProductPrice}
-                    />
+                    {priceFocus ?
+                        <input id="productPrice"
+                               name="productPrice"
+                               type="text"
+                               placeholder="상품 가격 입력"
+                               value={productPrice}
+                               onChange={onChangeProductPrice}
+                               onBlur={onFocusProductPrice}
+                        />
+                        :
+                        <input id="productPrice"
+                               name="productPrice"
+                               type="text"
+                               placeholder="상품 가격 입력"
+                               value={formattedPrice}
+                               onFocus={onFocusProductPrice}
+                        />
+                    }
                 </div>
             </div>
             <div className={classes.boxComponent}>
@@ -125,9 +163,20 @@ const InputMoney = () => {
                     <label htmlFor="productMemo">메모</label>
                 </div>
                 <div className={classes.elementBox}>
-                    <input type="checkbox" id="productMemo" name="productMemo"/>
+                    <input type="checkbox"
+                           id="productMemo"
+                           name="productMemo"
+                           checked={productMemo}
+                           onChange={onChangeProductMemo}
+                    />
                     <label>메모 작성</label>
-                    <input id="productMemoDescription" name="productMemoDescription"/>
+                    {productMemo &&
+                        <input id="productMemoDescription"
+                               name="productMemoDescription"
+                               value={productMemoDescription}
+                               onChange={onChangeProductDescription}
+                        />
+                    }
                 </div>
             </div>
             <div className={classes.boxComponent}>
@@ -135,9 +184,21 @@ const InputMoney = () => {
                     <label htmlFor="productReBuy1">재구매 의사</label>
                 </div>
                 <div className={classes.elementBox}>
-                    <input type="radio" id="productReBuy1" name="productReBuy"/>
+                    <input type="radio"
+                           id="productReBuy1"
+                           name="productReBuy"
+                           value="true"
+                           checked={productReBuy}
+                           onChange={onChangeProductReBuy}
+                    />
                     <label htmlFor="productReBuy1">한다</label>
-                    <input type="radio" id="productReBuy2" name="productReBuy"/>
+                    <input type="radio"
+                           id="productReBuy2"
+                           name="productReBuy"
+                           value="false"
+                           checked={productReBuy}
+                           onChange={onChangeProductReBuy}
+                    />
                     <label htmlFor="productReBuy2">안한다</label>
                 </div>
             </div>
