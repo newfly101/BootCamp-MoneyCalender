@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import classes from './InputMoney.module.css';
 
 const InputMoney = () => {
@@ -32,7 +32,9 @@ const InputMoney = () => {
     }
     const onKeyDownAddProduct = (event) => {
         if (event.code === 'Enter' && addProduct.trim().length > 0) {
-            setProductType(prevState => [...prevState, addProduct]);
+            if (!productType.includes(addProduct)) {
+                setProductType(prevState => [...prevState, addProduct]);
+            }
             setAddProductFlag(false);
             setAddProduct('');
         }
