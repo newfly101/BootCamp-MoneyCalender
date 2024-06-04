@@ -1,7 +1,51 @@
 .mainBox {
     margin: 2rem 10rem 3rem 10rem;
-    padding: 5rem;
+    padding-top: 1rem;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
+    flex-direction: column;
 }
+.boxComponent {
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+.boxComponent input {
+    margin-left: 1rem;
+    height: 32px;
+    font-size: 1rem;
+}
+.boxComponent select {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+}
+.labelBox {
+    width: 30%;
+    align-items: center;
+    text-align: right;
+}
+.labelBox label {
+    font-size: 1.5rem;
+}
+.elementBox {
+    width: 60%;
+    display: flex;
+    align-items: center;
+}
+.elementBox select {
+    width: 100px;
+    height: 38px;
+}
+.elementBox input[type="text"]{
+    display: flex;
+    align-items: center;
+}
+.elementBox label {
+    padding-left: 3px;
+}
+
+
