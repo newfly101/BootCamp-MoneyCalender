@@ -47,5 +47,13 @@
 .elementBox label {
     padding-left: 3px;
 }
+.btn {
+    margin-left: 5px;
+    background: white;
+    border: 1px solid black;
+}
+.btn:hover {
+    background: #707070;
+}
 
 
