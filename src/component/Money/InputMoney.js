@@ -86,7 +86,7 @@ const InputMoney = () => {
                             <option key={`product-${index}`}>{item}</option>
                         ))}
                     </select>
-                    <div>
+                    <div className={classes.btnBox}>
                         <button className={classes.btn} onClick={toggleAddProductType}>유형추가</button>
                         {productType.length > 1 &&
                             <button className={classes.btn} onClick={deleteProductType}>유형삭제</button>

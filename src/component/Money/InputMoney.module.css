@@ -39,6 +39,8 @@
 .elementBox select {
     width: 100px;
     height: 38px;
+    font-size: 1.3rem;
+    text-align: center;
 }
 .elementBox input[type="text"]{
     display: flex;
@@ -47,13 +49,25 @@
 .elementBox label {
     padding-left: 3px;
 }
+.elementBox option {
+    font-size: 1rem;
+}
 .btn {
     margin-left: 5px;
     background: white;
     border: 1px solid black;
+    margin-bottom: 5px;
 }
 .btn:hover {
     background: #707070;
+}
+.btnBox {
+    display: flex;
+    flex-direction: column;
+}
+/* 마지막 버튼의 아래쪽 간격 */
+.btnBox .btn:last-child {
+    margin-bottom: 0;
 }
 
 
