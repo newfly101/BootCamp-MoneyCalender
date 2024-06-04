@@ -5,6 +5,7 @@ const InputMoney = () => {
     const [productName, setProductName] = React.useState('');
     const [productPrice, setProductPrice] = React.useState('');
     const [productType, setProductType] = React.useState(['식료품']);
+    const [selectedType, setSelectedType] = React.useState('식료품');
     const [productDate, setProductDate] = React.useState(new Date().toString());
     const [productMemo, setProductMemo] = React.useState('');
     const [productReBuy, setProductReBuy] = React.useState(true);
@@ -26,6 +27,13 @@ const InputMoney = () => {
     }
     const toggleAddProductType = () => {
         addProductFlag ? setAddProductFlag(false) : setAddProductFlag(true);
+    }
+    const onChangeSelectedType = (event) => {
+        setSelectedType(event.target.value);
+    }
+    const deleteProductType = () => {
+        setProductType(productType.filter(item => item !== selectedType));
+        console.log("삭제 : ",selectedType);
     }
     const onChangeAddProduct = (event) => {
         setAddProduct(event.target.value);
@@ -73,12 +81,17 @@ const InputMoney = () => {
                     <label htmlFor="productType">유형</label>
                 </div>
                 <div className={classes.elementBox}>
-                    <select id="productType" name="productType">
+                    <select id="productType" name="productType" onChange={onChangeSelectedType}>
                         {productType && productType.map((item, index) => (
                             <option key={`product-${index}`}>{item}</option>
                         ))}
                     </select>
-                    <button className={classes.btn} onClick={toggleAddProductType}>유형추가</button>
+                    <div>
+                        <button className={classes.btn} onClick={toggleAddProductType}>유형추가</button>
+                        {productType.length > 1 &&
+                            <button className={classes.btn} onClick={deleteProductType}>유형삭제</button>
+                        }
+                    </div>
                     {addProductFlag && 
                     <input type="text"
                            name="addProduct"
