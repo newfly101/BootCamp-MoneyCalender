@@ -1,12 +1,15 @@
 import React from 'react';
 import classes from './InputMoney.module.css';
+import dayjs from "dayjs";
 
 const InputMoney = () => {
+    const today = dayjs(new Date()).format('YYYY-MM-DD').toString();
+
     const [productName, setProductName] = React.useState('');
     const [productPrice, setProductPrice] = React.useState('');
     const [productType, setProductType] = React.useState(['식료품']);
     const [selectedType, setSelectedType] = React.useState('식료품');
-    const [productDate, setProductDate] = React.useState(new Date().toString());
+    const [productDate, setProductDate] = React.useState(today);
     const [productMemo, setProductMemo] = React.useState('');
     const [productReBuy, setProductReBuy] = React.useState(true);
     const [addProductFlag, setAddProductFlag] = React.useState(false);
@@ -21,9 +24,6 @@ const InputMoney = () => {
         if (regex.test(event.target.value)) {
             setProductPrice(event.target.value);
         }
-    }
-    const onChangeProductDate = (event) => {
-        // console.log(event.target.value);
     }
     const toggleAddProductType = () => {
         addProductFlag ? setAddProductFlag(false) : setAddProductFlag(true);
@@ -46,6 +46,10 @@ const InputMoney = () => {
             setAddProductFlag(false);
             setAddProduct('');
         }
+    }
+
+    const onChangeProductDate = (event) => {
+        setProductDate(event.target.value);
     }
 
     return (
@@ -110,6 +114,7 @@ const InputMoney = () => {
                     <input type="date"
                            id="productBuyDate"
                            name="productBuyDate"
+                           max={today}
                            value={productDate}
                            onChange={onChangeProductDate}
                     />
