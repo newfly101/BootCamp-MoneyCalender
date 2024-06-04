@@ -3,8 +3,8 @@ import classes from './filter.module.css';
 
 const Filter = () => {
     return (
-        <div>
-
+        <div className={classes.mainBox}>
+            Filter
         </div>
     );
 };

@@ -3,8 +3,8 @@ import classes from './ListItems.module.css';
 
 const ListItems = () => {
     return (
-        <div>
-
+        <div className={classes.mainBox}>
+            ListItems
         </div>
     );
 };

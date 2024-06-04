@@ -1,0 +1,7 @@
+.mainBox {
+    margin: 2rem 5rem 2rem 5rem;
+    padding: 5rem;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
