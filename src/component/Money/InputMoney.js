@@ -219,7 +219,7 @@ const InputMoney = () => {
                     </div>
                 </div>
                 <div className={classes.boxComponent}>
-                    <button className={classes.btn} type="submit" onClick={onSubmitMoney}>입력</button>
+                    <button className={classes.btn} type="submit" onClick={onSubmitMoney}>제출</button>
                 </div>
             </div>
         </form>
