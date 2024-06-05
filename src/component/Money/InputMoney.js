@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './InputMoney.module.css';
 import dayjs from "dayjs";
 
@@ -21,7 +21,7 @@ const InputMoney = () => {
     const [productMemo, setProductMemo] = React.useState(false);
     const [productMemoDescription, setProductMemoDescription] = React.useState('');
 
-    const [productReBuy, setProductReBuy] = React.useState(true);
+    const [productReBuy, setProductReBuy] = React.useState("");
 
 
     const onChangeProductName = (event) => {
@@ -69,13 +69,16 @@ const InputMoney = () => {
         setProductDate(event.target.value);
     }
     const onChangeProductMemo = () => {
-            setProductMemo(!productMemo);
+        // setProductMemo(!productMemo);
+        console.log("before : ",productMemo);
+        setProductMemo(prevState => !prevState);
     }
     const onChangeProductDescription = (event) => {
         setProductMemoDescription(event.target.value);
     }
     const onChangeProductReBuy = (event) => {
-        setProductReBuy(event.target.value === "true");
+        setProductReBuy(event.target.value);
+        console.log(productReBuy);
     }
 
     const onSubmitMoney = (event) => {
@@ -92,6 +95,10 @@ const InputMoney = () => {
 
         console.log(submitObject);
     }
+
+    useEffect(() => {
+        console.log("after",productMemo);
+    }, [productMemo]);
 
     return (
         <form>
@@ -204,7 +211,7 @@ const InputMoney = () => {
                                id="productReBuy1"
                                name="productReBuy"
                                value="true"
-                               checked={productReBuy}
+                               checked={productReBuy === "true"}
                                onChange={onChangeProductReBuy}
                         />
                         <label htmlFor="productReBuy1">한다</label>
@@ -212,7 +219,7 @@ const InputMoney = () => {
                                id="productReBuy2"
                                name="productReBuy"
                                value="false"
-                               checked={productReBuy}
+                               checked={productReBuy === "false"}
                                onChange={onChangeProductReBuy}
                         />
                         <label htmlFor="productReBuy2">안한다</label>
