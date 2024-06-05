@@ -218,8 +218,8 @@ const InputMoney = () => {
                         <label htmlFor="productReBuy2">안한다</label>
                     </div>
                 </div>
-                <div>
-                    <button type="submit" onClick={onSubmitMoney}>입력</button>
+                <div className={classes.boxComponent}>
+                    <button className={classes.btn} type="submit" onClick={onSubmitMoney}>입력</button>
                 </div>
             </div>
         </form>
