@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import classes from './InputMoney.module.css';
 import dayjs from "dayjs";
 
@@ -22,7 +22,6 @@ const InputMoney = () => {
     const [productMemoDescription, setProductMemoDescription] = React.useState('');
 
     const [productReBuy, setProductReBuy] = React.useState(true);
-
 
 
     const onChangeProductName = (event) => {
@@ -70,139 +69,160 @@ const InputMoney = () => {
         setProductDate(event.target.value);
     }
     const onChangeProductMemo = () => {
-        productMemo ? setProductMemo(false) : setProductMemo(true);
+            setProductMemo(!productMemo);
     }
     const onChangeProductDescription = (event) => {
         setProductMemoDescription(event.target.value);
     }
     const onChangeProductReBuy = (event) => {
-        setProductReBuy(Boolean(event.target.value));
+        setProductReBuy(event.target.value === "true");
+    }
+
+    const onSubmitMoney = (event) => {
+        event.preventDefault();
+        let submitObject = {
+            productName: productName,
+            productPrice: productPrice,
+            selectedType: selectedType,
+            productDate: productDate,
+            productMemo: productMemo,
+            productMemoDescription: productMemoDescription,
+            productReBuy: productReBuy
+        };
+
+        console.log(submitObject);
     }
 
     return (
-        <div className={classes.mainBox}>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productName">이름</label>
+        <form>
+            <div className={classes.mainBox}>
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productName">이름</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        <input id="productName"
+                               name="productName"
+                               placeholder="상품명을 입력"
+                               value={productName}
+                               onChange={onChangeProductName}/>
+                    </div>
                 </div>
-                <div className={classes.elementBox}>
-                    <input id="productName"
-                           name="productName"
-                           placeholder="상품명을 입력"
-                           value={productName}
-                           onChange={onChangeProductName}/>
-                </div>
-            </div>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productPrice">가격</label>
-                </div>
-                <div className={classes.elementBox}>
-                    {priceFocus ?
-                        <input id="productPrice"
-                               name="productPrice"
-                               type="text"
-                               placeholder="상품 가격 입력"
-                               value={productPrice}
-                               onChange={onChangeProductPrice}
-                               onBlur={onFocusProductPrice}
-                        />
-                        :
-                        <input id="productPrice"
-                               name="productPrice"
-                               type="text"
-                               placeholder="상품 가격 입력"
-                               value={formattedPrice}
-                               onFocus={onFocusProductPrice}
-                        />
-                    }
-                </div>
-            </div>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productType">유형</label>
-                </div>
-                <div className={classes.elementBox}>
-                    <select id="productType" name="productType" onChange={onChangeSelectedType}>
-                        {productType && productType.map((item, index) => (
-                            <option key={`product-${index}`}>{item}</option>
-                        ))}
-                    </select>
-                    <div className={classes.btnBox}>
-                        <button className={classes.btn} onClick={toggleAddProductType}>유형추가</button>
-                        {productType.length > 1 &&
-                            <button className={classes.btn} onClick={deleteProductType}>유형삭제</button>
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productPrice">가격</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        {priceFocus ?
+                            <input id="productPrice"
+                                   name="productPrice"
+                                   type="text"
+                                   placeholder="상품 가격 입력"
+                                   value={productPrice}
+                                   onChange={onChangeProductPrice}
+                                   onBlur={onFocusProductPrice}
+                            />
+                            :
+                            <input id="productPrice"
+                                   name="productPrice"
+                                   type="text"
+                                   placeholder="상품 가격 입력"
+                                   value={formattedPrice}
+                                   onFocus={onFocusProductPrice}
+                            />
                         }
                     </div>
-                    {addProductFlag && 
-                    <input type="text"
-                           name="addProduct"
-                           id="addProduct"
-                           value={addProduct}
-                           onKeyDown={onKeyDownAddProduct}
-                           onChange={onChangeAddProduct}
-                    />}
                 </div>
-            </div>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productBuyDate">구입 날짜</label>
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productType">유형</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        <select id="productType" name="productType" onChange={onChangeSelectedType}>
+                            {productType && productType.map((item, index) => (
+                                <option key={`product-${index}`}>{item}</option>
+                            ))}
+                        </select>
+                        <div className={classes.btnBox}>
+                            <button type="button" className={classes.btn} onClick={toggleAddProductType}>유형추가</button>
+                            {productType.length > 1 &&
+                                <button type="button" className={classes.btn} onClick={deleteProductType}>유형삭제</button>
+                            }
+                        </div>
+                        {addProductFlag &&
+                            <input type="text"
+                                   name="addProduct"
+                                   id="addProduct"
+                                   value={addProduct}
+                                   onKeyDown={onKeyDownAddProduct}
+                                   onChange={onChangeAddProduct}
+                            />}
+                    </div>
                 </div>
-                <div className={classes.elementBox}>
-                    <input type="date"
-                           id="productBuyDate"
-                           name="productBuyDate"
-                           max={today}
-                           value={productDate}
-                           onChange={onChangeProductDate}
-                    />
-                </div>
-            </div>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productMemo">메모</label>
-                </div>
-                <div className={classes.elementBox}>
-                    <input type="checkbox"
-                           id="productMemo"
-                           name="productMemo"
-                           checked={productMemo}
-                           onChange={onChangeProductMemo}
-                    />
-                    <label>메모 작성</label>
-                    {productMemo &&
-                        <input id="productMemoDescription"
-                               name="productMemoDescription"
-                               value={productMemoDescription}
-                               onChange={onChangeProductDescription}
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productBuyDate">구입 날짜</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        <input type="date"
+                               id="productBuyDate"
+                               name="productBuyDate"
+                               max={today}
+                               value={productDate}
+                               onChange={onChangeProductDate}
                         />
-                    }
+                    </div>
+                </div>
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productMemo">메모</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        <input type="checkbox"
+                               id="productMemo"
+                               name="productMemo"
+                               value="memo"
+                               checked={productMemo}
+                               onChange={onChangeProductMemo}
+                        />
+                        <label>메모 작성</label>
+                        {productMemo &&
+                            <input id="productMemoDescription"
+                                   name="productMemoDescription"
+                                   value={productMemoDescription}
+                                   onChange={onChangeProductDescription}
+                            />
+                        }
+                    </div>
+                </div>
+                <div className={classes.boxComponent}>
+                    <div className={classes.labelBox}>
+                        <label htmlFor="productReBuy1">재구매 의사</label>
+                    </div>
+                    <div className={classes.elementBox}>
+                        <input type="radio"
+                               id="productReBuy1"
+                               name="productReBuy"
+                               value="true"
+                               checked={productReBuy}
+                               onChange={onChangeProductReBuy}
+                        />
+                        <label htmlFor="productReBuy1">한다</label>
+                        <input type="radio"
+                               id="productReBuy2"
+                               name="productReBuy"
+                               value="false"
+                               checked={productReBuy}
+                               onChange={onChangeProductReBuy}
+                        />
+                        <label htmlFor="productReBuy2">안한다</label>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" onClick={onSubmitMoney}>입력</button>
                 </div>
             </div>
-            <div className={classes.boxComponent}>
-                <div className={classes.labelBox}>
-                    <label htmlFor="productReBuy1">재구매 의사</label>
-                </div>
-                <div className={classes.elementBox}>
-                    <input type="radio"
-                           id="productReBuy1"
-                           name="productReBuy"
-                           value="true"
-                           checked={productReBuy}
-                           onChange={onChangeProductReBuy}
-                    />
-                    <label htmlFor="productReBuy1">한다</label>
-                    <input type="radio"
-                           id="productReBuy2"
-                           name="productReBuy"
-                           value="false"
-                           checked={productReBuy}
-                           onChange={onChangeProductReBuy}
-                    />
-                    <label htmlFor="productReBuy2">안한다</label>
-                </div>
-            </div>
-        </div>
+        </form>
     );
 };
 
