@@ -1,7 +1,23 @@
 .mainBox {
     margin: 2rem 10rem 3rem 10rem;
-    padding: 5rem;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
+}
+
+.boxComponent {
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
+.boxComponent select {
+    margin-left: 1rem;
+    width: 120px;
+    height: 38px;
+    font-size: 1.3rem;
+    text-align: center;
 }
